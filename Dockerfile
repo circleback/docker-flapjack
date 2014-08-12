@@ -1,8 +1,11 @@
 FROM ubuntu:14.04
 MAINTAINER Circleback "http://circleback.com"
 
+# Fix for docker HUB
+RUN ln -s -f /bin/true /usr/bin/chfn
+
 RUN echo 'deb http://packages.flapjack.io/deb precise main' | sudo tee  /etc/apt/sources.list.d/flapjack.list
-RUN apt-get update -y --force-yes
+RUN apt-get update -y
 RUN RUNLEVEL=1 DEBIAN_FRONTEND=noninteractive apt-get install -y --force-yes supervisor redis-server flapjack nginx
 
 RUN mkdir -p /etc/flapjack /var/{run,log,lib}/flapjack
